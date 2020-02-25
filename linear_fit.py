@@ -18,7 +18,7 @@ def printErrorbar():
     for i in range(3):
         plt.errorbar(dates,data[:,2*i+1],yerr=data[:,2*i+2],color=colors[i],linewidth=2,label=labels[i])
 
-#add linear regression lines
+#ordinary least square
 def vandermonde(t):
     A = np.vstack((np.ones(t.shape[0]),t)).T
     return A
@@ -35,13 +35,7 @@ def printRegression():
         f = x[0] + x[1]*t
         plt.plot(dates,f,'--',color=colors[i],linewidth=0.5,label=labels[i]+' lin fit: y = '+str(x[0])[:5]+str(x[1])[:5]+'*x')
 
-#proof that fitlines go through the means of the data
-def meanMarkers():
-    meanDate = float(str(np.mean(data[:,0]))[:12])
-    for i in range(3):
-        plt.plot(np.mean(t),np.mean(data[:,2*i+1]),marker='*',color=colors[i],markersize=10)
-
-#uncertainties for linear regression
+#uncertainties for ordinary least square
 def printUncertainty():
     t = np.array((data[:,0]-735090)*24)
     A = vandermonde(t)
@@ -56,7 +50,7 @@ def printUncertainty():
         f2 = x[0]-sigmax1*0.1+(x[1]-sigmax2*0.1)*t
         plt.fill_between(dates,f1,f2,color=colors[i],alpha=0.1)
 
-#weighted least square regression
+#weighted least square
 def weightedLeastSquare(A,y,b):
     W = np.diag(y**(-2))
     x = np.linalg.inv(A.T.dot(W).dot(A)).dot(A.T).dot(W).dot(b)
