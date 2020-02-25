@@ -4,7 +4,7 @@ import numpy as np
 import math as m
 
 #read in data 
-data = np.array([[float(i) for i in (' '.join(line.split())).split(' ')] for line in open('NO2_DOAS_data.txt').readlines()[1:]])
+data = np.array([[float(i) for i in (' '.join(line.split())).split(' ')] for line in open('linear_fit_data.txt').readlines()[1:]])
 t = np.array((data[:,0]-735090)*24) #transform date variables into hours
 dates = dates.num2date(data[:,0])
 
