@@ -14,3 +14,6 @@ NO2 concentrations measured in Hongkong in 3 different locations (ascending heig
 - Street
 - Roof of School
 - Roof of Langham Hotel
+The measurements were done during the course of a day, from 8 AM to 7 PM.
+### Processing Methods
+- Linear fit using least square approximations
