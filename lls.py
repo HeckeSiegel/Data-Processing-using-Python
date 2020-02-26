@@ -84,7 +84,6 @@ def printFancy(title):
     plt.xlabel('time')
     plt.ylabel('NO2 mixing ratio (ppbv)')
     plt.title(title)
-    #plt.title('DOAS measurement using 3 different light paths')
     plt.grid()
     plt.legend()
     plt.show()
