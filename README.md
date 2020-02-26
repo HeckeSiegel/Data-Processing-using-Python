@@ -17,4 +17,4 @@
 >The measurements were done during the course of a day, from 8 AM to 7 PM.
 ### Processing Methods
 >Linear fit using least square approximations
-![ordinary](https://github.com/HeckeSiegel/Data-Processing-using-Python/blob/master/ordinary.png)
+[![ordinary](https://github.com/HeckeSiegel/Data-Processing-using-Python/blob/master/ordinary.png)]
