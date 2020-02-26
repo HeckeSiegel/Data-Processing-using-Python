@@ -1,5 +1,5 @@
 # Data Processing using Python
-Computational tools for processing measurement data of atmospheric trace gas concentrations using Pyhton.
+>Computational tools for processing measurement data of atmospheric trace gas concentrations using Pyhton.
 
 ## Installation
 ### Clone
@@ -10,10 +10,10 @@ Computational tools for processing measurement data of atmospheric trace gas con
 - Run the .py files using for example IDLE (built in Python IDE)
 ## Linear Regression
 ### Data
-NO2 concentrations measured in Hongkong in 3 different locations (ascending height) using DOAS (differential optical absorption spectroscopy): 
+>NO2 concentrations measured in Hongkong in 3 different locations (ascending height) using DOAS (differential optical absorption spectroscopy): 
 - Street
 - Roof of School
 - Roof of Langham Hotel
 The measurements were done during the course of a day, from 8 AM to 7 PM.
 ### Processing Methods
-- Linear fit using least square approximations
+>Linear fit using least square approximations
