@@ -17,4 +17,11 @@
 >The measurements were done during the course of a day, from 8 AM to 7 PM.
 ### Processing Methods
 >Linear fit using least square approximations
-[![ordinary](https://github.com/HeckeSiegel/Data-Processing-using-Python/blob/master/ordinary.png)]
+- Ordinary least square
+![ordinary](https://github.com/HeckeSiegel/Data-Processing-using-Python/blob/master/ordinary.png)
+- Weighted Least Square
+![weighted](https://github.com/HeckeSiegel/Data-Processing-using-Python/blob/master/weighted.png)
+- Total Least Square
+![total](https://github.com/HeckeSiegel/Data-Processing-using-Python/blob/master/total.png)
+- Error Variances for all 3 methods compared using the data of Langham location
+![error](https://github.com/HeckeSiegel/Data-Processing-using-Python/blob/master/error.png)
