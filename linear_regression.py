@@ -4,7 +4,7 @@ import numpy as np
 import math as m
 
 #read in data 
-data = np.array([[float(i) for i in (' '.join(line.split())).split(' ')] for line in open('lls_data.txt').readlines()[1:]])
+data = np.array([[float(i) for i in (' '.join(line.split())).split(' ')] for line in open('NO2_DOAS_data.txt').readlines()[1:]])
 t = np.array((data[:,0]-735090)*24) #transform date variables into hours
 dates = dates.num2date(data[:,0])
 
@@ -33,22 +33,7 @@ def printRegression():
     for i in range(3):
         x = regressionParameter(A,data[:,2*i+1])
         f = x[0] + x[1]*t
-        plt.plot(dates,f,'--',color=colors[i],linewidth=0.5,label=labels[i]+' lin fit: y = '+str(x[0])[:5]+str(x[1])[:5]+'*x')
-
-#uncertainties for ordinary least square
-def printUncertainty():
-    t = np.array((data[:,0]-735090)*24)
-    A = vandermonde(t)
-    n = len(t)
-    for i in range(3):
-        x = regressionParameter(A,data[:,2*i+1])
-        e = x[0]+x[1]*t-data[:,2*i+1]
-        sigmae = (np.sum(e**2)/(n-2))**0.5
-        sigmax2 = sigmae/((np.var(t))**0.5)
-        sigmax1 = sigmax2*(np.mean(t**2)/n)**0.5
-        f1 = x[0]+sigmax1*0.1+(x[1]+sigmax2*0.1)*t
-        f2 = x[0]-sigmax1*0.1+(x[1]-sigmax2*0.1)*t
-        plt.fill_between(dates,f1,f2,color=colors[i],alpha=0.1)
+        plt.plot(dates,f,'--',color=colors[i],linewidth=0.5,label='y = '+str(x[0])[:5]+str(x[1])[:5]+'*x')
 
 #weighted least square
 def weightedLeastSquare(A,y,b):
@@ -62,27 +47,41 @@ def printWeightedRegression():
     for i in range(3):
        x = weightedLeastSquare(A,data[:,2+2*i],data[:,1+2*i])
        f = x[0] + x[1]*t
-       plt.plot(dates,f,':',color=colors[i],label=labels[i]+' err. weighted: y = '+str(x[0])[:5]+str(x[1])[:5]+'*x')
+       plt.plot(dates,f,':',color=colors[i],label='y = '+str(x[0])[:5]+str(x[1])[:5]+'*x')
 
 #total least square
 def augmentedMatrix(t,b):
     C = np.vstack((np.ones(t.shape[0]),t,b)).T
     return C
 
+def totalLeastSquare(i):
+    t = np.array((data[:,0]-735090)*24)
+    C = augmentedMatrix(t,data[:,2*i+1])
+    U,W,V = np.linalg.svd(C, full_matrices=True)
+    VAb = V.T[0:2,2]
+    Vbb = V.T[2,2]
+    x = -VAb/Vbb
+    return x
+
 def printTotalLeastSquare():
     t = np.array((data[:,0]-735090)*24)
     for i in range(3):
-        C = augmentedMatrix(t,data[:,2*i+1])
-        U,W,V = np.linalg.svd(C, full_matrices=True)
-        VAb = V.T[0:2,2]
-        Vbb = V.T[2,2]
-        x = -VAb/Vbb
+        x = totalLeastSquare(i)
         f = x[0] + x[1]*t
-        plt.plot(dates,f,colors[i]+'-',linewidth=0.8,label=labels[i]+'TLS fit y = '+str(x[0])[:5]+str(x[1])[:5]+'*x')
+        plt.plot(dates,f,colors[i]+'-',linewidth=0.8,label='y = '+str(x[0])[:5]+str(x[1])[:5]+'*x')
+        
+#uncertainties for linear regression
+def printUncertainty(x,i,n,title):
+    e = x[0]+x[1]*t-data[:,2*i+1]
+    sigmae = (np.sum(e**2)/(n-2))**0.5
+    sigmax2 = sigmae/((np.var(t))**0.5)
+    sigmax1 = sigmax2*(np.mean(t**2)/n)**0.5
+    f = sigmax1+sigmax2*t
+    plt.plot(dates,f,label=title)
     
-def printFancy(title):
+def printFancy(xlabel,title):
     plt.xlabel('time')
-    plt.ylabel('NO2 mixing ratio (ppbv)')
+    plt.ylabel(xlabel)
     plt.title(title)
     plt.grid()
     plt.legend()
@@ -90,18 +89,29 @@ def printFancy(title):
    
 printErrorbar()
 printRegression()
-printUncertainty()
-printFancy('Linear Least Square Regression with Uncertainty')
+printFancy('NO2 mixing ratio (ppbv)','Ordinary Least Square')
 
 printErrorbar()
 printWeightedRegression()
-printFancy('Weighted Least Square Regression')
+printFancy('NO2 mixing ratio (ppbv)','Weighted Least Square')
 
 printErrorbar()
 printTotalLeastSquare()
-printFancy('Total Least Square Regression')
+printFancy('NO2 mixing ratio (ppbv)','Total Least Square')
 
 printRegression()
 printWeightedRegression()
 printTotalLeastSquare()
-printFancy('All three methods compared')
+printFancy('NO2 mixing ratio (ppbv)','All three methods compared')
+
+t = np.array((data[:,0]-735090)*24)
+A = vandermonde(t)
+n = len(t)
+i = 0
+x1 = regressionParameter(A,data[:,2*i+1])
+printUncertainty(x1,i,n,'ordinary')
+x2 = weightedLeastSquare(A,data[:,2+2*i],data[:,1+2*i])
+printUncertainty(x2,i,n,'weighted')
+x3 = totalLeastSquare(i)
+printUncertainty(x3,i,n,'total')
+printFancy('error variance (ppbv)','Error variance for all 3 methods')
