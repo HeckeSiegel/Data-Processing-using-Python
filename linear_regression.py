@@ -4,7 +4,7 @@ import numpy as np
 import math as m
 
 #read in data 
-data = np.array([[float(i) for i in (' '.join(line.split())).split(' ')] for line in open('NO2_DOAS_data.txt').readlines()[1:]])
+data = np.array([[float(i) for i in (' '.join(line.split())).split(' ')] for line in open('linear_regression.txt').readlines()[1:]])
 t = np.array((data[:,0]-735090)*24) #transform date variables into hours
 dates = dates.num2date(data[:,0])
 
@@ -34,6 +34,12 @@ def printRegression():
         x = regressionParameter(A,data[:,2*i+1])
         f = x[0] + x[1]*t
         plt.plot(dates,f,'--',color=colors[i],linewidth=0.5,label='y = '+str(x[0])[:5]+str(x[1])[:5]+'*x')
+
+#proof that fitlines go through the means of the data
+def meanMarkers():
+    meanDate = float(str(np.mean(data[:,0]))[:12])
+    for i in range(3):
+        plt.plot(np.mean(t),np.mean(data[:,2*i+1]),marker='*',color=colors[i],markersize=10)
 
 #weighted least square
 def weightedLeastSquare(A,y,b):
@@ -79,39 +85,39 @@ def printUncertainty(x,i,n,title):
     f = sigmax1+sigmax2*t
     plt.plot(dates,f,label=title)
     
-def printFancy(xlabel,title):
-    plt.xlabel('time')
+def printFancy(xlabel,ylabel,title):
+    plt.xlabel(ylabel)
     plt.ylabel(xlabel)
     plt.title(title)
     plt.grid()
     plt.legend()
-    plt.show()
-   
+
+fig = plt.figure()
+fig.add_subplot(221)
 printErrorbar()
 printRegression()
-printFancy('NO2 mixing ratio (ppbv)','Ordinary Least Square')
+printFancy('NO2 mixing ratio (ppbv)','','Ordinary Least Square')
 
+fig.add_subplot(222)
 printErrorbar()
 printWeightedRegression()
-printFancy('NO2 mixing ratio (ppbv)','Weighted Least Square')
+printFancy('NO2 mixing ratio (ppbv)','','Weighted Least Square')
 
+fig.add_subplot(223)
 printErrorbar()
 printTotalLeastSquare()
-printFancy('NO2 mixing ratio (ppbv)','Total Least Square')
-
-printRegression()
-printWeightedRegression()
-printTotalLeastSquare()
-printFancy('NO2 mixing ratio (ppbv)','All three methods compared')
+printFancy('NO2 mixing ratio (ppbv)','time','Total Least Square')
 
 t = np.array((data[:,0]-735090)*24)
 A = vandermonde(t)
 n = len(t)
 i = 0
+fig.add_subplot(224)
 x1 = regressionParameter(A,data[:,2*i+1])
 printUncertainty(x1,i,n,'ordinary')
 x2 = weightedLeastSquare(A,data[:,2+2*i],data[:,1+2*i])
 printUncertainty(x2,i,n,'weighted')
 x3 = totalLeastSquare(i)
 printUncertainty(x3,i,n,'total')
-printFancy('error variance (ppbv)','Error variance for all 3 methods')
+printFancy('error variance (ppbv)','time','Error variance for all 3 methods')
+plt.show()
