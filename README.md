@@ -19,3 +19,13 @@
 >Linear fits using different least square approximations
 
 ![regression](https://github.com/HeckeSiegel/Data-Processing-using-Python/blob/master/linear_regression.png)
+
+## Higher Order Linear Regression
+### Data
+>NO2 concentrations measured in Munich with measurement error
+>2-year average NO2 concentrations
+### Processing methods
+>Comparison of 1st and 2nd order linear regression
+>Error terms for both linear fits
+
+![higher_order_regression](https://github.com/HeckeSiegel/Data-Processing-using-Python/blob/master/higher_order_linear_regression.png)
