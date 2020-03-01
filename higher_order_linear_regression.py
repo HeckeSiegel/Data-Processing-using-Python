@@ -5,7 +5,7 @@ import math as m
 import scipy.optimize
 
 #read in, tidy and plot data
-data0 = np.array([[float(i) for i in (' '.join(line.split())).split(' ')] for line in open('mim_no2.txt').readlines()[1:]])
+data0 = np.array([[float(i) for i in (' '.join(line.split())).split(' ')] for line in open('higher_order_linear_regression.txt').readlines()[1:]])
 data = []
 for i in range(0,len(data0),1):
     if (np.isnan(data0[i,1]) == False and np.isnan(data0[i,2]) == False):
