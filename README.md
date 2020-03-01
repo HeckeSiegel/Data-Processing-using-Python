@@ -25,6 +25,7 @@
 - NO2 concentrations measured in Munich with measurement error
 - 2-year average NO2 concentrations
 ### Processing methods
+- Fit 2-year average against measurement
 - Comparison of 1st and 2nd order linear regression
 - Error terms for both linear fits
 
