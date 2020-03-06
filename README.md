@@ -33,6 +33,9 @@
 
 ## Interpolation
 ### Data
-- Random data points to be interpolated
+- Random data points (black crosses) to be interpolated
 ### Processing methods
-- Cubic spline Interpolation
+- Cubic spline interpolation
+- Piecewise polynomial interpolation
+
+![interpolation](https://github.com/HeckeSiegel/Data-Processing-using-Python/blob/master/interpolation.png)
