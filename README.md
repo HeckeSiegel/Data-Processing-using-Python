@@ -30,3 +30,9 @@
 - Error terms for both linear fits
 
 ![higher_order_regression](https://github.com/HeckeSiegel/Data-Processing-using-Python/blob/master/higher_order_linear_regression.png)
+
+## Interpolation
+### Data
+- Random data points to be interpolated
+### Processing methods
+- Cubic spline Interpolation
