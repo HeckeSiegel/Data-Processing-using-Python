@@ -4,7 +4,7 @@
 ## Installation
 
 ### Clone
-- Clone this repo using 'https://github.com/HeckeSiegel/Data-Processing-using-Python.git'
+- Clone this repo using https://github.com/HeckeSiegel/Data-Processing-using-Python.git
 
 ### Setup
 - Save the .txt files in the same folder as the .py files
